@@ -11,7 +11,7 @@ const CreateLoan = () => {
 
   const createLoan = async () => {
     try {
-      const res = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/user/createLoan`, { loanAmount, loanTerm: loanDuration }, { withCredentials: true });
+      const res = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/user/createLoan`, { loanAmount, loanTerm: loanDuration },{withCredentials:true});
       console.log(res.data);
       alert("Loan created successfully");
     } catch (error) {
