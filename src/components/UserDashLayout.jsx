@@ -32,6 +32,7 @@ function UserDashLayout({ children }) {
             }}>
             {<HomeOutlinedIcon />}Home
           </li>
+
           <li
             className={`py-2 px-2 rounded-lg hover:bg-blue-100 cursor-pointer flex gap-2 ${route === "/create-loan" ? "bg-blue-100" : ""}`}
             onClick={() => {
@@ -62,9 +63,12 @@ function UserDashLayout({ children }) {
 
             {/* Dropdown menu */}
             {isDropdownOpen && (
-              <div className="absolute right-0 mt-2 w-48 bg-white border rounded-lg shadow-lg">
+              <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg">
                 <button className=" w-full px-4 py-2 text-left text-gray-700 border-none" onClick={() => logout()}>
                   Logout
+                </button>
+                <button className=" w-full px-4 py-2 text-left text-gray-700 border-none" onClick={() => navigate("/create-loan")}>
+                  Create Loan
                 </button>
               </div>
             )}

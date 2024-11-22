@@ -8,16 +8,17 @@ function ProtectedRoute({ element, requiredRole }) {
 
   useEffect(() => {
     if (!loading) {
+      // Wait until loading is complete
       if (!isAuthenticated) {
-        navigate("/signin");
+        navigate("/signin"); // Redirect to sign-in if not authenticated
       } else if (requiredRole && role !== requiredRole) {
-        navigate("/unauthorized"); // Redirect if the role doesn't match
+        navigate("/unauthorized"); // Redirect if role doesn't match
       }
     }
   }, [isAuthenticated, role, requiredRole, loading, navigate]);
 
   if (loading) {
-    return <div>Loading...</div>; // Replace with your preferred loader
+    return <div>Loading...</div>; // Show a loader while checking authentication
   }
 
   return isAuthenticated && (!requiredRole || role === requiredRole) ? element : null;

@@ -5,11 +5,12 @@ const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [role, setRole] = useState(null); // Store the role (user or admin)
-  const [loading, setLoading] = useState(true);
+  const [role, setRole] = useState(null);
+  const [loading, setLoading] = useState(true); // Keep track of loading state
 
   useEffect(() => {
-    try {
+    // Check cookies for tokens on initial render
+    const initializeAuth = () => {
       const userToken = Cookies.get("userToken");
       const adminToken = Cookies.get("adminToken");
 
@@ -23,11 +24,10 @@ export function AuthProvider({ children }) {
         setIsAuthenticated(false);
         setRole(null);
       }
-    } catch (error) {
-      console.error("Error retrieving token from cookies:", error);
-    } finally {
-      setLoading(false);
-    }
+      setLoading(false); // Set loading to false after initialization
+    };
+
+    initializeAuth();
   }, []);
 
   const login = (token, role) => {
@@ -50,7 +50,6 @@ export function AuthProvider({ children }) {
       Cookies.remove("adminToken");
       setIsAuthenticated(false);
       setRole(null);
-      alert("Logged out successfully");
     } catch (error) {
       console.error("Error removing token from cookies:", error);
     }
