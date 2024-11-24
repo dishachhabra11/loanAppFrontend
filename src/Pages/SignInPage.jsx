@@ -1,14 +1,16 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import InputField from "../components/InputFields/InputField";
 import Button from "../components/Buttons/Buton";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
+import Cookies from "js-cookie";
 
 const SignInPage = () => {
   const navigate = useNavigate();
   const { login } = useAuth();
+  const {isAuthenticated} = useAuth();
 
   const [formData, setFormData] = useState({
     email: "",
@@ -19,6 +21,8 @@ const SignInPage = () => {
   const handleClick = (isUserSelected) => {
     setIsUser(isUserSelected);
   };
+  
+  useEffect(() => { console.log(isAuthenticated)}, [isAuthenticated]);
 
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -37,13 +41,15 @@ const SignInPage = () => {
     setError(null);
 
     try {
+      console.log("Document Cookies:", document.cookie);
+
       const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/user/signin`, formData, {
         withCredentials: true,
       });
       console.log("Sign In Successful:", response.data);
+      // Cookies.set("userToken", response.data.token, { expires: 15 * 24 * 60 * 60 * 1000, sameSite: "None", httpOnly: false, secure: false });
       login(response.data.token, "user");
       navigate("/");
-      
     } catch (err) {
       console.error("Sign In Error:", err);
       setError(err.response?.data?.error || "Failed to sign in");
@@ -64,7 +70,6 @@ const SignInPage = () => {
       console.log("Sign In Successful, admin:", response.data);
       login(response.data.token, "admin");
       navigate("/dashboard");
-     
     } catch (err) {
       console.error("Sign In Error:", err);
       setError(err.response?.data?.error || "Failed to sign in");
@@ -92,7 +97,7 @@ const SignInPage = () => {
 
         {error && <div className="text-red-500 text-center mb-4">{error}</div>}
 
-        <form onSubmit={isUser? handleSubmitUser: handleSubmitAdmin} className="max-w-md mx-auto space-y-4">
+        <form onSubmit={isUser ? handleSubmitUser : handleSubmitAdmin} className="max-w-md mx-auto space-y-4">
           <InputField type="email" name="email" value={formData.email} onChange={handleChange} label="Email" placeholder="Enter your email" />
 
           <InputField type="password" name="password" value={formData.password} onChange={handleChange} label="Password" placeholder="Enter your password" />

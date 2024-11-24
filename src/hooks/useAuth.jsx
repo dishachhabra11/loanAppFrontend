@@ -32,11 +32,7 @@ export function AuthProvider({ children }) {
 
   const login = (token, role) => {
     try {
-      if (role === "user") {
-        Cookies.set("userToken", token, { expires: 15, sameSite: "strict" });
-      } else if (role === "admin") {
-        Cookies.set("adminToken", token, { expires: 15, sameSite: "strict" });
-      }
+      
       setIsAuthenticated(true);
       setRole(role);
     } catch (error) {

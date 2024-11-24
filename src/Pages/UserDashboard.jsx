@@ -10,6 +10,7 @@ import axios from "axios";
 import UserDashLayout from "../components/UserDashLayout";
 
 function UserDashboard() {
+  axios.defaults.withCredentials = true;
   const navigate = useNavigate();
   const [loans, setLoans] = useState();
   const [filter, setFilter] = useState("All Loans");
@@ -38,6 +39,7 @@ function UserDashboard() {
   const updateLoanStatus = (id, newStatus) => {
     setLoans((prevLoans) => prevLoans.map((loan) => (loan.id === id ? { ...loan, status: newStatus } : loan)));
   };
+  console.log("cookies", document.cookie);
 
   return (
     <UserDashLayout>
