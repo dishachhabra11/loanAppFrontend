@@ -52,7 +52,7 @@ const SignInPage = () => {
       navigate("/");
     } catch (err) {
       console.error("Sign In Error:", err);
-      setError(err.response?.data?.error || "Failed to sign in");
+      setError(err.response?.data?.error || "Password must contain at least 6 characters, a number, and a special character, 1 uppercase and 1lowercase letter");
     } finally {
       setLoading(false);
     }
@@ -72,7 +72,7 @@ const SignInPage = () => {
       navigate("/dashboard");
     } catch (err) {
       console.error("Sign In Error:", err);
-      setError(err.response?.data?.error || "Failed to sign in");
+      setError(err.response?.data?.error || "Password must contain at least 6 characters, a number, and a special character, 1 uppercase and 1lowercase letter");
     } finally {
       setLoading(false);
     }

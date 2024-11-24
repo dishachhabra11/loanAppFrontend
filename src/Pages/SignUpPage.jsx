@@ -31,7 +31,7 @@ const SignUpPage = () => {
       alert("Sign up successful!");
       navigate("/"); // Navigate to home page after successful signup
     } catch (error) {
-      setErrorMessage(error.response?.data.error[0].message || "Failed to sign up");
+      setErrorMessage(error.response?.data.error[0].message || "Password must contain at least 6 characters, a number, and a special character, 1 uppercase and 1lowercase letter");
     }
   };
 
