@@ -7,6 +7,7 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import {useAuth} from "../hooks/useAuth";
 
 function Dashboard() {
+  axios.defaults.withCredentials = true;
   const {logout} = useAuth();
   const [loans, setLoans] = useState([]);
   const [filter, setFilter] = useState("All Loans");
@@ -22,7 +23,7 @@ function Dashboard() {
   useEffect(() => {
     const fetchLoans = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/api/admin/loans", {
+        const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/admin/loans`, {
           withCredentials: true,
         });
         const fetchedLoans = response.data.loans.map((loan) => ({
