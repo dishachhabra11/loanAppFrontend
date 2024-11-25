@@ -23,7 +23,7 @@ const SignUpPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("http://localhost:5000/api/user/signup", formData, {
+      const response = await axios.post("https://loanappbackend-757n.onrender.com/api/user/signup", formData, {
         withCredentials: true,
       });
       console.log("API Response:", response.data);
